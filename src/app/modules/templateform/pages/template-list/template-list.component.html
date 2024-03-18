@@ -1,0 +1,34 @@
+<!-- <form>
+    <input placeholder="Name">
+    <input placeholder="Title">
+</form> -->
+
+<div class="container">
+    <form #heroForm="ngForm" (ngSubmit)="onSubmit(heroForm)">
+        <p>{{model | json}}</p>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input [(ngModel)] = "model.name" name="name" type="text" class="form-control" #name="ngModel" required>
+
+            <div [hidden]="name.valid || (name.pristine && !name.touched)" class="alert alert-danger">Name is required</div>
+            <br/>
+        </div>
+        
+        <div class="form-group">
+            <label for="alterEgo">Alter Ego</label>
+            <input [(ngModel)] = "model.alterEgo" name="alterEgo" type="text" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="power">Power</label>
+            <!-- <input [(ngModel)] = "model.power" name="power" type="text" class="form-control"> -->
+            <select class="form-control" [(ngModel)]="model.power" name="power">
+                <option *ngFor="let power of powers" [value]="power">{{power}}</option>
+            </select>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+    <p>model.name: {{model.name}}</p>
+    <p>model.power: {{model.power}}</p>
+    <p>name.valid: {{name.valid}}</p>
+</div>

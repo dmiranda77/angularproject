@@ -1,0 +1,46 @@
+<form [formGroup]="antiHeroForm" class="container" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input type="text" formControlName="firstName" id="firstName" class="form-control">
+        
+        <div *ngIf="firstName?.invalid && firstName?.dirty">
+            <div *ngIf="firstName?.errors?.['required']" class="alert alert-danger">
+                Name is required
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input type="text" formControlName="lastName" id="lastName" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="knownAs">Known As</label>
+        <input type="text" formControlName="knownAs" id="knownAs" class="form-control">
+    </div>
+    <br/>
+
+    <div>Address</div>
+    <div formGroupName="address">
+        <label for="bldgNo">Bldg. No.</label>
+        <input type="text" formControlName="bldgNo" class="form-control"/>
+    </div>
+
+
+    <br/>
+    <ng-container formArrayName="powers">
+        <label for="powers">Powers</label>
+        <div class="input-group mb-3" *ngFor="let _ of powerFormArray.controls; index as i">
+            <input [formControlName]="i" class="form-control" />
+            <button type="button" class="btn btn-danger" (click)="deletePower(i)">Delete</button>
+        </div>
+        <button type="button" (click)="addPower()" class="btn btn-info">
+            Add Power
+        </button>
+    </ng-container>
+    <br/>
+    <br/>
+    <button type="submit" class="btn btn-info">Submit</button>
+    <button type="button" class="btn btn-danger" (click)="clear()">Clear</button>
+    <button type="button" class="btn btn-warning" (click)="manualChangeState()">Change State</button>
+</form>
