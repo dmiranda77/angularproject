@@ -1,1 +1,5 @@
-<app-book-item></app-book-item>
+<h2>LIST OF BOOKS</h2>
+
+<div *ngFor= "let data of books">
+    <app-book-item [bookInput] ="data"></app-book-item>
+</div>

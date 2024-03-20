@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class CommandBarComponent {
   constructor(private router: Router) {} 
   command1(): void {
-    this.router.navigate(['/addUser'])
+    this.router.navigate(['/user'])
   }
 
   command2(): void {

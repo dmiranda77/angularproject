@@ -1,16 +1,14 @@
-
-
 <div class="blog-container">
     <div class="details"> 
-      <h2 class="blog-title">Title: {{blogInput?.title}}</h2>
-      <p>Description: {{blogInput?.description}}</p>
-      <p>Author: {{blogInput?.author}}</p>
-      <p>Comments:  {{blogInput?.comments}}</p>
+      <h2 class="blog-title">Title: {{ blogInput?.title }}</h2>
+      <p>Description: {{ blogInput?.description }}</p>
+      <p>Author: {{ blogInput?.author }}</p>
+      <p>Comments:  {{ blogInput?.comments }}</p>
     </div>
     
     <div class="button-container">
       <button (click)="editBlog()">Edit</button>
-      <!-- <button (click)="deleteBlog()">Delete</button> -->
+      <button (click)="deleteBlog()">Delete</button>
     </div>
   </div>
   

@@ -14,10 +14,6 @@ const routes: Routes = [
     path: 'form',
     component: BlogFormComponent
   },
-  {
-    path: 'list/empty',
-    component: BlogListComponent
-  },
 ];
 
 @NgModule({

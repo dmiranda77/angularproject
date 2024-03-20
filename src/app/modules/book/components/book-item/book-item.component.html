@@ -1,11 +1,12 @@
 <div class="book-container">
-    <h2 class="book-title">Book Title: {{bookInput?.title}}</h2>
-    <p>Author: {{bookInput?.author}}</p>
-    <p>ISB No.: {{bookInput?.isbn}}</p>
-    
-    <div class="button-container">
-      <button (click)="editBook()">Edit</button>
-      <button (click)="deleteBook()">Delete</button>
-    </div>
+  <div class="details"> 
+    <h2 class="book-title">Title: {{ bookInput?.title }}</h2>
+    <p>Author: {{ bookInput?.author }}</p>
+    <p>ISBN:  {{ bookInput?.isbn }}</p>
   </div>
   
+  <div class="button-container">
+    <button (click)="editBook()">Edit</button>
+    <button (click)="deleteBook()">Delete</button>
+  </div>
+</div>

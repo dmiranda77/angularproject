@@ -5,22 +5,37 @@ import { BlogServiceService } from '../../service/blog-service.service';
 @Component({
   selector: 'app-blog-list',
   templateUrl: './blog-list.component.html',
-  styleUrl: './blog-list.component.scss'
+  styleUrls: ['./blog-list.component.scss']
 })
 export class BlogListComponent {
-  blogs: BlogForm[] = [
-  ];
+  blogs: BlogForm[] = [];
+
   constructor(private blogService: BlogServiceService) { }
 
   ngOnInit(): void {
-    this.blogs = this.blogService.getAllBlogs();
+    this.fetchBlogs();
   }
-  deleteBlog(id: number) {
-    this.blogService.deleteBlog(id);
-    this.blogs = this.blogs.filter(blog => blog.id !== id);
+
+  fetchBlogs(): void {
+    this.blogService.getAllBlogs().subscribe(
+      blogs => {
+        this.blogs = blogs;
+      },
+      error => {
+        console.error('Error fetching blogs:', error);
+      }
+    );
   }
-  deleteAllBlog() {
-    this.blogService.deleteAllBlogs()
-    return this.blogs
+
+  deleteBlog(id: number): void {
+    this.blogService.deleteBlog(id).subscribe(() => {
+      this.fetchBlogs(); // Update the list after deletion
+    });
+  }
+
+  deleteAllBlogs(): void {
+    this.blogService.deleteAllBlogs().subscribe(() => {
+      this.fetchBlogs(); // Update the list after deletion
+    });
   }
 }

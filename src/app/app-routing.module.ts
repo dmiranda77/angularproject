@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   
   {
-    path: 'addUser',
+    path: 'user',
     loadChildren: () =>
       import('./modules/profile/profile.module').then(
         (m) => m.ProfileModule

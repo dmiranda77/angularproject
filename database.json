@@ -1,0 +1,59 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "age": 20,
+      "active": true
+    },
+    {
+      "name": "Jose Jones",
+      "age": 2,
+      "active": true,
+      "id": "4"
+    },
+    {
+      "id": "452c",
+      "name": "Jack Rambo",
+      "age": 2,
+      "active": true
+    }
+  ],
+  "books": [
+    {
+      "title": "Harry Potter",
+      "description": "",
+      "author": "J.K. Rowling",
+      "isbn": "9891281364",
+      "id": "1"
+    },
+    {
+      "id": "2",
+      "title": "Tuesdays with Morrie",
+      "author": "Mitch Albom",
+      "isbn": "445622221"
+    },
+    {
+      "id": "3",
+      "title": "Pride and Prejudice",
+      "author": "Jane Austen",
+      "isbn": "980909728"
+    }
+  ],
+  "blogs": [
+    {
+      "title": "How to Sew a Dress",
+      "description": "Brief procedure to sew a Dress",
+      "author": "Diana Miranda",
+      "comments": "Very helpful tutorial!",
+      "id": "1"
+    },
+    {
+      "id": "3",
+      "title": "Introduction to Springboot JPA",
+      "description": "This blog explains a step by step for creating a springboot project ",
+      "author": "Diana Miranda",
+      "comments": "WOW nice!"
+    }
+  ]
+}

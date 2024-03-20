@@ -1,7 +1,7 @@
 <form [formGroup]="userProfileForm" class="container" (ngSubmit)="onSubmit()">
     <div class="form-group">
         <label for="name">Name: </label>
-        <input type="text" formControlName="name" id="name" class="form-control">
+        <input type="text" formControlName="name" id="name" class="form-control" placeholder="eg: Juan S. Dela Cruz">
         
         <div *ngIf="name?.invalid && name?.dirty">
             <div *ngIf="name?.errors?.['required']" class="alert alert-danger">
@@ -15,9 +15,9 @@
 
     <div class="form-group">
         <label for="email">Email Address: </label>
-        <input type="text" formControlName="email" id="email" class="form-control">
+        <input type="text" formControlName="email" id="email" class="form-control" placeholder="Enter email address">
 
-        <div>
+        <div *ngIf="email?.invalid && email?.dirty">
             <div *ngIf="email?.errors?.['required']" class="alert alert-danger">
                Email Address is required
             </div>
@@ -28,30 +28,25 @@
     </div>
     <div class="form-group">
         <label for="bio">Bio: </label>
-        <input type="text" formControlName="bio" id="bio" class="form-control">
+        <input type="text" formControlName="bio" id="bio" class="form-control" placeholder="Write something about yourself">
     </div>
     <br/>
-<!-- 
-    <div>Address</div>
-    <div formGroupName="address">
-        <label for="bldgNo">Bldg. No.</label>
-        <input type="text" formControlName="bldgNo" class="form-control"/>
-    </div> -->
 
 
     <br/>
-    <!-- <ng-container formArrayName="powers">
-        <label for="powers">Powers</label>
-        <div class="input-group mb-3" *ngFor="let _ of powerFormArray.controls; index as i">
-            <input [formControlName]="i" class="form-control" />
-            <button type="button" class="btn btn-danger" (click)="deletePower(i)">Delete</button>
-        </div>
-        <button type="button" (click)="addPower()" class="btn btn-info">
-            Add Power
-        </button>
-    </ng-container> -->
-
-    <button type="submit" class="btn btn-success" (click)="addUser()">Save</button>
-    <button type="button" class="btn btn-danger" (click)="clear()">Clear</button>
-    <!-- <button type="button" class="btn btn-warning" (click)="manualChangeState()">Change State</button> -->
+    <button type="submit" class="btn btn-success" (click)="addUser()">Save User</button>
+    <button type="button" class="btn btn-danger" (click)="clear()">Clear Form</button>
+    <!-- <button type="button" class="btn btn-info" (click)="seeList()">See Profile List</button> -->
 </form>
+
+<!-- Profile List -->
+<!-- <div *ngIf="showProfileList">
+    <h2>Profile List</h2>
+    <ul>
+        <li *ngFor="let profile of profiles">
+            <strong>Name:</strong> {{ profile.name }} <br>
+            <strong>Email:</strong> {{ profile.email }} <br>
+            <strong>Bio:</strong> {{ profile.bio }}
+        </li>
+    </ul>
+</div> -->

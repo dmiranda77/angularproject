@@ -1,91 +1,99 @@
 import { Component, OnInit } from '@angular/core';
-import {  
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators, } from '@angular/forms';
-import { checkValidName } from '../../../profile/validator/profile.validator';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BlogForm } from '../../model/blog-form';
 import { BlogServiceService } from '../../service/blog-service.service';
+import { checkValidName } from '../../../profile/validator/profile.validator';
 
 @Component({
   selector: 'app-blog-form',
   templateUrl: './blog-form.component.html',
-  styleUrl: './blog-form.component.scss'
+  styleUrls: ['./blog-form.component.scss']
 })
 export class BlogFormComponent implements OnInit {
   blogForm: FormGroup;
-  commentFormArray: FormArray;
+  blogId: number | null = null;
 
-  // constructor
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private blogService: BlogServiceService)
- {
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute, 
+    private blogService: BlogServiceService
+  ) {
     this.blogForm = this.fb.group({
-      id: 0,
-      title: 
-      [
-        { value: ''},
-        [Validators.required]
-      ],
+      title: ['', Validators.required],
       description: '',
-      author: [
-        { value: ''},
-        [Validators.required, checkValidName()]
-      ],
-      // comments: this.fb.array([new FormControl('Wow'), new FormControl('So Nice')]),
-      comments: this.fb.array([]),
+      author: ['', [Validators.required, checkValidName()]],
+      comments: ''
     });
-
-    this.commentFormArray = this.blogForm.get('comments') as FormArray;
   }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      const id = +params['id'];
-      if (id) {
-        this.fetchBlogDetails(id);
+      this.blogId = +params['id'];
+      if (this.blogId) {
+        this.fetchBlogDetails(this.blogId);
+      } else {
+        this.clear(); // Clear form if no blogId is provided
       }
     });
   }
 
   fetchBlogDetails(id: number): void {
-    const blog = this.blogService.getBlogsById(id);
-    if (blog) {
-      this.blogForm.patchValue(blog);
+    this.blogService.getBlogsById(id).subscribe(
+      (blog: BlogForm) => {
+        this.blogForm.patchValue(blog);
+      },
+      error => {
+        console.error('Error fetching blog details:', error);
+      }
+    );
+  }
+
+  onSubmit() {
+    if (this.blogForm.valid) {
+      const blogData = this.blogForm.value;
+      if (this.blogId !== null) {
+        // If blogId is not null, it means we're updating an existing blog
+        blogData.id = this.blogId; // Make sure to include the ID
+        this.updateBlog(blogData);
+      } else {
+        this.addBlog(blogData);
+      }
     }
   }
 
-  onSubmit = () => {
-    console.log(this.blogForm.value);
-
-  };
-  addComment() {
-    this.commentFormArray.push(new FormControl(''));
-  }
-  addUser() {
-    this.blogForm.addControl('newControl', new FormControl(''));
-  }
-
-  deleteComment(index: number) {
-    this.commentFormArray.removeAt(index);
+  addBlog(blog: BlogForm) {
+    this.blogService.addBlog(blog).subscribe(
+      () => {
+        console.log('Blog added successfully');
+        this.clear(); // Clear form after successful submission
+      },
+      error => {
+        console.error('Error adding blog:', error);
+      }
+    );
   }
 
-  clear = () => {
+  updateBlog(blog: BlogForm) {
+    this.blogService.updateBlog(blog).subscribe(
+      () => {
+        console.log('Blog updated successfully');
+      },
+      error => {
+        console.error('Error updating blog:', error);
+      }
+    );
+  }
+
+  clear() {
     this.blogForm.reset();
-  };
-
-  // manualChangeState = () => {
-  //   this.userProfileForm.get('knownAs')?.setErrors({ incorrect: true });
-  //   this.userProfileForm.get('lastName')?.disable();
-  //   this.userProfileForm.addControl('otherControl', new FormControl());
-  // };
+  }
 
   get title() {
-    return this.blogForm.get('title') as FormControl;
+    return this.blogForm.get('title');
   }
+
   get author() {
-    return this.blogForm.get('author') as FormControl;
+    return this.blogForm.get('author');
   }
 }

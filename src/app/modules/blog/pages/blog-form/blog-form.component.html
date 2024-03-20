@@ -1,7 +1,7 @@
 <form [formGroup]="blogForm" class="container" (ngSubmit)="onSubmit()">
     <div class="form-group">
         <label for="title">Title: </label>
-        <input type="text" formControlName="title" id="ttile" class="form-control">
+        <input type="text" formControlName="title" id="title" class="form-control">
         
         <div *ngIf="title?.invalid && title?.dirty">
             <div *ngIf="title?.errors?.['required']" class="alert alert-danger">
@@ -12,7 +12,7 @@
     </div>
     <div class="form-group">
         <label for="description">Author: </label>
-        <input type="text" formControlName="author" id="description" class="form-control">
+        <input type="text" formControlName="author" id="author" class="form-control">
         <div *ngIf="title?.invalid && title?.dirty">
         <div *ngIf="author?.errors?.['hasNumbers']" class="alert alert-danger">
                 Author should not contain numbers
@@ -24,22 +24,12 @@
         <input type="text" formControlName="description" id="description" class="form-control">
     </div>
 
+    <div class="form-group">
+        <label for="comments">Comments: </label>
+        <input type="text" formControlName="comments" id="comments" class="form-control">
+    </div>
     <br/>
 
-
-    <br/>
-    <ng-container formArrayName="comments">
-        <label for="comments">Powers</label>
-        <div class="input-group mb-3" *ngFor="let _ of commentFormArray.controls; index as i">
-            <input [formControlName]="i" class="form-control" />
-            <button type="button" class="btn btn-danger" (click)="deleteComment(i)">Delete</button>
-        </div>
-        <button type="button" (click)="addComment()" class="btn btn-info">
-            Add Comment
-        </button>
-    </ng-container>
-
-    <button type="submit" class="btn btn-success" (click)="addUser()">Save</button>
+    <button type="submit" class="btn btn-success">Save</button>
     <button type="button" class="btn btn-danger" (click)="clear()">Clear</button>
-    <!-- <button type="button" class="btn btn-warning" (click)="manualChangeState()">Change State</button> -->
 </form>

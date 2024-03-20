@@ -22,24 +22,17 @@ export class ProfileFormComponent implements OnInit {
   // constructor
   constructor(private fb: FormBuilder) {
     this.userProfileForm = this.fb.group({
-      // firstName: [
-      //   { value: 'Bruce', disabled: false },
-      //   // [Validators.required, checkHasNumberValidator()],
-      // ],
       name: 
       [
-        { value: 'Diana', disabled: false},
+        { value: '', disabled: false},
         [Validators.required, checkValidName()]
       ],
       email: [
-        { value: 'dmiranda@77soft.com', disabled: false},
+        { value: '', disabled: false},
         [Validators.required, checkValidEmail()]
       ],
-      bio: 'from Taytay',
-      // powers: this.fb.array([new FormControl('fly'), new FormControl('zap')]),
+      bio: '',
     });
-
-    // this.powerFormArray = this.antiHeroForm.controls['powers'] as FormArray;
   }
 
   exampleJSON = () => {
@@ -57,16 +50,15 @@ export class ProfileFormComponent implements OnInit {
     return obj;
   };
 
-  ngOnInit(): void {
-    // this.antiHeroForm.valueChanges.subscribe((x) => console.log(x));
-  }
-
   onSubmit = () => {
+    if (this.userProfileForm.valid) {
+      localStorage.setItem('userProfile', JSON.stringify(this.userProfileForm.value));
+      console.log('Form data saved to local storage:', this.userProfileForm.value);
+  } else {
+      console.log('Form is invalid. Cannot save to local storage.');
+      
+  }
     console.log(this.userProfileForm.value);
-    // console.log(this.antiHeroForm.value);
-    // console.log(this.antiHeroForm);
-    // console.log(this.antiHeroForm.getRawValue())
-    // const antiHero: AntiHero = this.antiHeroForm.getRawValue() as AntiHero;
 
     console.log(this.name.errors);
   };
@@ -74,27 +66,13 @@ export class ProfileFormComponent implements OnInit {
   get error() {
     return  this.name.errors
   }
-
-  addPower() {
-    // this.powerFormArray.push(new FormControl(''));
-  }
   addUser() {
     this.userProfileForm.addControl('newControl', new FormControl(''));
-  }
-
-  deletePower(index: number) {
-    // this.powerFormArray.removeAt(index);
   }
 
   clear = () => {
     this.userProfileForm.reset();
   };
-
-  // manualChangeState = () => {
-  //   this.userProfileForm.get('knownAs')?.setErrors({ incorrect: true });
-  //   this.userProfileForm.get('lastName')?.disable();
-  //   this.userProfileForm.addControl('otherControl', new FormControl());
-  // };
 
   get name() {
     return this.userProfileForm.get('name') as FormControl;
@@ -102,4 +80,11 @@ export class ProfileFormComponent implements OnInit {
   get email() {
     return this.userProfileForm.get('email') as FormControl;
   }
+  ngOnInit(): void {
+    // // Load saved data from local storage
+    // // const savedUserProfile = localStorage.getItem('userProfile');
+    // if (savedUserProfile) {
+    //     this.userProfileForm.patchValue(JSON.parse(savedUserProfile));
+    // }
+}
 }
